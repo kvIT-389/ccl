@@ -28,7 +28,9 @@ typedef struct list {
 
 
 /**
- * \brief Creates new linked list and returns pointer to it.
+ * \brief Creates new linked list.
+ * 
+ * \returns Pointer to created list.
  */
 list_t *createList(void);
 

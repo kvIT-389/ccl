@@ -24,16 +24,20 @@ typedef struct list_node {
 
 
 /**
- * \brief Create new linked list node and return pointer to it.
+ * \brief Create new linked list node.
  * 
  * \param data: data of the created node.
+ * 
+ * \returns Pointer to created node.
  */
 list_node_t *createNode(void *data);
 
 /**
- * \brief Frees linked list node and returns its next node.
+ * \brief Frees linked list node.
  * 
  * \param node: node instance to free.
+ * 
+ * \returns Pointer to node next to the freed.
  */
 list_node_t *freeNode(list_node_t *node);
 
