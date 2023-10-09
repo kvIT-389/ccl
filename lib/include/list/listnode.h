@@ -12,7 +12,7 @@ extern "C" {
 
 
 /**
- * Linked list node.
+ * \brief Linked list node.
  */
 typedef struct list_node {
   /* Pointer to node data. */
@@ -24,12 +24,16 @@ typedef struct list_node {
 
 
 /**
- * Create new linked list node and return pointer to it.
+ * \brief Create new linked list node and return pointer to it.
+ * 
+ * \param data: data of the created node.
  */
 list_node_t *createNode(void *data);
 
 /**
- * Frees linked list node and returns its next node.
+ * \brief Frees linked list node and returns its next node.
+ * 
+ * \param node: node instance to free.
  */
 list_node_t *freeNode(list_node_t *node);
 

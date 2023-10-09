@@ -16,7 +16,7 @@ extern "C" {
 
 
 /**
- * Linked list data structure.
+ * \brief Linked list data structure.
  */
 typedef struct list {
   /* The first node of the list. */
@@ -34,16 +34,23 @@ list_t *createList(void);
 
 /**
  * \brief Adds element to the end of the linked list.
+ * 
+ * \param list: list instance where to add element.
+ * \param data: new element's data.
  */
 void addListElement(list_t *list, void *data);
 
 /**
  * \brief Removes all elements of the linked list.
+ * 
+ * \param list: list instance to clear.
  */
 void clearList(list_t *list);
 
 /**
  * \brief Clears linked list and frees its.
+ * 
+ * \param list: list instance to free.
  */
 void freeList(list_t *list);
 
