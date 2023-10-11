@@ -8,7 +8,7 @@
 #include "list/listnode.h"
 
 
-list_node_t *createNode(void *data) {
+list_node_t *list_node__create(void *data) {
     list_node_t *new_node = (list_node_t *)malloc(
         sizeof(list_node_t)
     );
@@ -19,7 +19,7 @@ list_node_t *createNode(void *data) {
     return new_node;
 }
 
-list_node_t *freeNode(list_node_t *node) {
+list_node_t *list_node__free(list_node_t *node) {
     list_node_t *next;
 
     if (node == NULL) {

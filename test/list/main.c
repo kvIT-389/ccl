@@ -17,19 +17,19 @@ void f3() {
 
 
 int main(int argc, char const *argv[]) {
-    list_t *list = createList();
+    list_t *list = list__create();
 
     printf("Initial size: %d\n", list->size);
 
-    addListElement(list, &f1);
-    addListElement(list, &f2);
+    list__add(list, &f1);
+    list__add(list, &f2);
 
     printf("Size after 2 add()'s: %d\n", list->size);
 
     ((void (*)())list->head->data)();
     ((void (*)())list->head->next->data)();
 
-    addListElement(list, &f3);
+    list__add(list, &f3);
 
     printf("Size after 1 extra add(): %d\n", list->size);
 
@@ -37,11 +37,11 @@ int main(int argc, char const *argv[]) {
     ((void (*)())list->head->data)();
     ((void (*)())list->head->next->data)();
 
-    clearList(list);
+    list__clear(list);
 
     printf("Size after clear(): %d\n", list->size);
 
-    freeList(list);
+    list__free(list);
 
     printf("Size after free(): %d\n", list->size);
 

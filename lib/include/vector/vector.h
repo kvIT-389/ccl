@@ -32,7 +32,7 @@ typedef struct vector {
  * 
  * \returns Pointer to created vector.
  */
-vector_t *createVector(size_t size);
+vector_t *vector__create(size_t size);
 
 /**
  * \brief Changes size of the vector.
@@ -46,7 +46,7 @@ vector_t *createVector(size_t size);
  * \returns New size of the vector if `vector` is not `NULL`,
  *          `0` otherwise.
  */
-size_t resizeVector(vector_t *vector, size_t size);
+size_t vector__resize(vector_t *vector, size_t size);
 
 /**
  * \brief Gets vector element at certain index.
@@ -57,7 +57,7 @@ size_t resizeVector(vector_t *vector, size_t size);
  * \returns Vector element at index `n` if `vector` is not `NULL`
  *          and `n` is less than vector size, `NULL` otherwise.
  */
-void *getVectorAt(vector_t *vector, size_t n);
+void *vector__at(vector_t *vector, size_t n);
 
 /**
  * \brief Sets vector value at certain index.
@@ -69,14 +69,14 @@ void *getVectorAt(vector_t *vector, size_t n);
  * \note If index `n` is greater than the maximum possible
  *       vector size will be automatically increased to `n + 1`.
  */
-void setVectorAt(vector_t *vector, size_t n, void *value);
+void vector__set(vector_t *vector, size_t n, void *value);
 
 /**
  * \brief Frees vector.
  * 
  * \param vector: vector to free.
  */
-void freeVector(vector_t *vector);
+void vector__free(vector_t *vector);
 
 
 #ifdef __cplusplus

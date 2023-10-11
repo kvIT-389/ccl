@@ -32,7 +32,7 @@ typedef struct list {
  * 
  * \returns Pointer to created list.
  */
-list_t *createList(void);
+list_t *list__create(void);
 
 /**
  * \brief Adds element to the end of the linked list.
@@ -40,21 +40,21 @@ list_t *createList(void);
  * \param list: list instance where to add element.
  * \param data: new element's data.
  */
-void addListElement(list_t *list, void *data);
+void list__add(list_t *list, void *data);
 
 /**
  * \brief Removes all elements of the linked list.
  * 
  * \param list: list instance to clear.
  */
-void clearList(list_t *list);
+void list__clear(list_t *list);
 
 /**
  * \brief Clears linked list and frees its.
  * 
  * \param list: list instance to free.
  */
-void freeList(list_t *list);
+void list__free(list_t *list);
 
 
 #ifdef __cplusplus

@@ -9,7 +9,7 @@
 #include "list/listnode.h"
 
 
-list_t *createList(void) {
+list_t *list__create(void) {
     list_t *new_list = (list_t *)malloc(sizeof(list_t));
 
     new_list->head = NULL;
@@ -18,14 +18,14 @@ list_t *createList(void) {
     return new_list;
 }
 
-void addListElement(list_t *list, void *data) {
+void list__add(list_t *list, void *data) {
     list_node_t *new_node, *node;
 
     if (list == NULL) {
         return;
     }
 
-    new_node = createNode(data);
+    new_node = list_node__create(data);
     node = list->head;
 
     list->size++;
@@ -42,7 +42,7 @@ void addListElement(list_t *list, void *data) {
     node->next = new_node;
 }
 
-void clearList(list_t *list) {
+void list__clear(list_t *list) {
     list_node_t *node;
 
     if (list == NULL) {
@@ -51,14 +51,14 @@ void clearList(list_t *list) {
 
     node = list->head;
     while (node != NULL) {
-        node = freeNode(node);
+        node = list_node__free(node);
     }
 
     list->head = NULL;
     list->size = 0;
 }
 
-void freeList(list_t *list) {
-    clearList(list);
+void list__free(list_t *list) {
+    list__clear(list);
     free(list);
 }

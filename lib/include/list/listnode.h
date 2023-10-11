@@ -30,7 +30,7 @@ typedef struct list_node {
  * 
  * \returns Pointer to created node.
  */
-list_node_t *createNode(void *data);
+list_node_t *list_node__create(void *data);
 
 /**
  * \brief Frees linked list node.
@@ -39,7 +39,7 @@ list_node_t *createNode(void *data);
  * 
  * \returns Pointer to node next to the freed.
  */
-list_node_t *freeNode(list_node_t *node);
+list_node_t *list_node__free(list_node_t *node);
 
 
 #ifdef __cplusplus
