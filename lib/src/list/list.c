@@ -65,11 +65,17 @@ void list__free(list_t *list) {
 
 
 list_iterator_t list__get_iterator(list_t *list) {
-    return (list_iterator_t){list->head};
+    if (list == NULL) {
+        return (list_iterator_t){};
+    }
+
+    return (list_iterator_t){
+        .current_node = list->head
+    };
 }
 
 void *list_iterator__current(list_iterator_t *iterator) {
-    if (iterator == NULL || iterator->current_node == NULL) {
+    if (iterator == NULL || list_iterator__ended(iterator)) {
         return NULL;
     }
 
@@ -77,7 +83,7 @@ void *list_iterator__current(list_iterator_t *iterator) {
 }
 
 void *list_iterator__next(list_iterator_t *iterator) {
-    if (iterator == NULL || iterator->current_node == NULL) {
+    if (iterator == NULL || list_iterator__ended(iterator)) {
         return NULL;
     }
 
@@ -86,6 +92,6 @@ void *list_iterator__next(list_iterator_t *iterator) {
     return list_iterator__current(iterator);
 }
 
-int list_iterator__ended(list_iterator_t *iterator) {
-    return iterator->current_node == NULL;
+uint8_t list_iterator__ended(list_iterator_t *iterator) {
+    return iterator == NULL || iterator->current_node == NULL;
 }

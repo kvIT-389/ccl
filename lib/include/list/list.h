@@ -6,6 +6,7 @@
 #ifndef LIST_H_INCLUDED_
 #define LIST_H_INCLUDED_
 
+#include <stdint.h>
 #include <stdlib.h>
 
 #include "list/listnode.h"
@@ -31,6 +32,7 @@ typedef struct list {
  * \brief Linked list iterator.
  */
 typedef struct list_iterator {
+  /* Linked list node with current iterator value. */
   list_node_t *current_node;
 } list_iterator_t;
 
@@ -65,7 +67,7 @@ void list__clear(list_t *list);
 void list__free(list_t *list);
 
 /**
- * \brief Gets list's nodes iterator.
+ * \brief Gets linked list iterator.
  * 
  * \param list: list to get iterator from.
  * 
@@ -86,20 +88,20 @@ void *list_iterator__current(list_iterator_t *iterator);
 /**
  * \brief Changes list iterator value to the next.
  * 
- * \param iterator: iterator to change.
+ * \param iterator: list iterator to change.
  * 
  * \returns Next list iterator value.
  */
 void *list_iterator__next(list_iterator_t *iterator);
 
 /**
- * \brief Checks if iterator is ended or not.
+ * \brief Checks if list iterator is ended or not.
  * 
- * \param iterator: iterator to check.
+ * \param iterator: list iterator to check.
  * 
  * \returns `1` if iterator is ended, `0` otherwise.
  */
-int list_iterator__ended(list_iterator_t *iterator);
+uint8_t list_iterator__ended(list_iterator_t *iterator);
 
 
 #ifdef __cplusplus
