@@ -31,11 +31,27 @@ int main(int argc, char const *argv[]) {
 
     list__add(list, &f3);
 
-    printf("Size after 1 extra add(): %d\n", list->size);
+    printf("Size after 1 more add(): %d\n", list->size);
 
-    ((void (*)())list->head->next->next->data)();
-    ((void (*)())list->head->data)();
-    ((void (*)())list->head->next->data)();
+    list__add(list, &f1);
+    list__add(list, &f1);
+
+    printf("Size after 2 extra add()'s: %d\n", list->size);
+
+    list_iterator_t list_iter = list__get_iterator(list);
+
+    printf("Start iterating through list...\n");
+
+    void (*fn)() = (void (*)())list_iterator__current(&list_iter);
+    while (!list_iterator__ended(&list_iter)) {
+        /* Using value */
+        fn();
+
+        /* Updating value */
+        fn = (void (*)())list_iterator__next(&list_iter);
+    }
+
+    printf("Iteration ended.\n");
 
     list__clear(list);
 
