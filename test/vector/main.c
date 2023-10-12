@@ -37,6 +37,25 @@ int main(int argc, char const *argv[]) {
 
     printf("Size after extra set() at index 4, which was greater than vector's size: %d\n", vector->size);
 
+    vector_iterator_t vector_iter = vector__get_iterator(vector);
+
+    printf("Start iterating through vector...\n");
+
+    void (*fn)() = vector_iterator__current(&vector_iter);
+    while (!vector_iterator__ended(&vector_iter)) {
+        /* Using value */
+        if (fn != NULL) {
+            fn();
+        } else {
+            printf("Vector value is NULL.\n");
+        }
+
+        /* Updating value */
+        fn = vector_iterator__next(&vector_iter);
+    }
+
+    printf("Iteration ended.\n");
+
     vector__free(vector);
 
     printf("Size after free(): %d\n", vector->size);

@@ -6,6 +6,7 @@
 #ifndef VECTOR_H_INCLUDED_
 #define VECTOR_H_INCLUDED_
 
+#include <stdint.h>
 #include <stdlib.h>
 
 #ifdef __cplusplus
@@ -23,6 +24,18 @@ typedef struct vector {
   /* Vector size i.e. elements count. */
   size_t size;
 } vector_t;
+
+
+/**
+ * \brief Vector iterator.
+ */
+typedef struct vector_iterator {
+  /* Pointer to current iterator value. */
+  void **current;
+
+  /* Number of remaining iterator values including current. */
+  size_t i;
+} vector_iterator_t;
 
 
 /**
@@ -77,6 +90,43 @@ void vector__set(vector_t *vector, size_t n, void *value);
  * \param vector: vector to free.
  */
 void vector__free(vector_t *vector);
+
+/**
+ * \brief Gets vector values iterator.
+ * 
+ * \param vector: vector to get iterator from.
+ * 
+ * \returns Iterator of the given vector.
+ */
+vector_iterator_t vector__get_iterator(vector_t *vector);
+
+/**
+ * \brief Gets current vector iterator value as void pointer.
+ * 
+ * \param iterator: vector iterator to get value from.
+ * 
+ * \returns Current vector iterator value if `iterator` is not ended,
+ *          `NULL` otherwise.
+ */
+void *vector_iterator__current(vector_iterator_t *iterator);
+
+/**
+ * \brief Changes vector iterator value to the next.
+ * 
+ * \param iterator: vector iterator to change.
+ * 
+ * \returns Next vector iterator value.
+ */
+void *vector_iterator__next(vector_iterator_t *iterator);
+
+/**
+ * \brief Checks if vector iterator is ended or not.
+ * 
+ * \param iterator: vector iterator to check.
+ * 
+ * \returns `1` if iterator is ended, `0` otherwise.
+ */
+uint8_t vector_iterator__ended(vector_iterator_t *iterator);
 
 
 #ifdef __cplusplus
