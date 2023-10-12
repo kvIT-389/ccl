@@ -42,13 +42,17 @@ int main(int argc, char const *argv[]) {
 
     printf("Start iterating through list...\n");
 
-    void (*fn)() = (void (*)())list_iterator__current(&list_iter);
+    void (*fn)() = list_iterator__current(&list_iter);
     while (!list_iterator__ended(&list_iter)) {
         /* Using value */
-        fn();
+        if (fn != NULL) {
+            fn();
+        } else {
+            printf("Vector value is NULL.\n");
+        }
 
         /* Updating value */
-        fn = (void (*)())list_iterator__next(&list_iter);
+        fn = list_iterator__next(&list_iter);
     }
 
     printf("Iteration ended.\n");
