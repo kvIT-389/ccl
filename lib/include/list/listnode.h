@@ -35,7 +35,7 @@ list_node_t *list_node__create(void *data);
 /**
  * \brief Frees linked list node.
  * 
- * \param node: node instance to free.
+ * \param node: node to free.
  * 
  * \returns Pointer to node next to the freed.
  */
