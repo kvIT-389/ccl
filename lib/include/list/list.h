@@ -17,57 +17,91 @@ extern "C" {
 
 
 /**
- * \brief Linked list data structure.
+ * \brief Doubly-linked list data structure.
  */
 typedef struct list {
+  /* List size i.e elements count. */
+  size_t size;
+
   /* The first node of the list. */
   list_node_t *head;
 
-  /* List size i.e elements count. */
-  size_t size;
+  /* The last node of the list. */
+  list_node_t *tail;
 } list_t;
 
 
 /**
- * \brief Linked list iterator.
+ * \brief List iterator.
  */
 typedef struct list_iterator {
-  /* Linked list node with current iterator value. */
+  /* List node with current iterator value. */
   list_node_t *current_node;
 } list_iterator_t;
 
 
 /**
- * \brief Creates new linked list.
+ * \brief Creates new list.
  * 
  * \returns Pointer to created list.
  */
 list_t *list__create(void);
 
 /**
- * \brief Adds element to the end of the linked list.
- * 
- * \param list: list where to add element.
- * \param data: new element's data.
- */
-void list__add(list_t *list, void *data);
-
-/**
- * \brief Removes all elements of the linked list.
- * 
- * \param list: list to clear.
- */
-void list__clear(list_t *list);
-
-/**
- * \brief Clears linked list and frees its.
+ * \brief Clears list and frees its.
  * 
  * \param list: list to free.
  */
 void list__free(list_t *list);
 
 /**
- * \brief Gets linked list iterator.
+ * \brief Adds element to the end of the list.
+ * 
+ * \param list: list where to add element.
+ * \param data: new element's data.
+ */
+void list__push_back(list_t *list, void *data);
+
+/**
+ * \brief Adds element to the beginning of the list.
+ * 
+ * \param list: list where to add element.
+ * \param data: new element's data.
+ */
+void list__push_front(list_t *list, void *data);
+
+/**
+ * \brief Removes the last element of the list.
+ * 
+ * \param list: list where to remove element.
+ */
+void list__pop_back(list_t *list);
+
+/**
+ * \brief Removes the first element of the list.
+ * 
+ * \param list: list where to remove element.
+ */
+void list__pop_front(list_t *list);
+
+/**
+ * \brief Removes all elements of the list.
+ * 
+ * \param list: list to clear.
+ */
+void list__clear(list_t *list);
+
+/**
+ * \brief Checks if list is empty or not.
+ * 
+ * \param iterator: list to check.
+ * 
+ * \returns `1` if list is empty, `0` otherwise.
+ */
+uint8_t list__empty(list_t *list);
+
+/**
+ * \brief Gets list iterator.
  * 
  * \param list: list to get iterator from.
  * 

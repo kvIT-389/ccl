@@ -12,19 +12,22 @@ extern "C" {
 
 
 /**
- * \brief Linked list node.
+ * \brief Doubly-linked list node.
  */
 typedef struct list_node {
-  /* Pointer to node data. */
+  /* List node data. */
   void *data;
 
   /* Pointer to the next list node. */
   struct list_node *next;
+
+  /* Pointer to the next list node. */
+  struct list_node *prev;
 } list_node_t;
 
 
 /**
- * \brief Create new linked list node.
+ * \brief Create new list node.
  * 
  * \param data: data of the created node.
  * 
@@ -33,13 +36,11 @@ typedef struct list_node {
 list_node_t *list_node__create(void *data);
 
 /**
- * \brief Frees linked list node.
+ * \brief Frees list node.
  * 
  * \param node: node to free.
- * 
- * \returns Pointer to node next to the freed.
  */
-list_node_t *list_node__free(list_node_t *node);
+void list_node__free(list_node_t *node);
 
 
 #ifdef __cplusplus

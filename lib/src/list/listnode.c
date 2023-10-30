@@ -1,33 +1,27 @@
 /**
  * \file listnode.c
- * \brief Contains linked list node functions implementation.
+ * \brief Contains list node functions implementation.
  */
-
-#include <stdlib.h>
 
 #include "list/listnode.h"
 
+#include <stdlib.h>
+
 
 list_node_t *list_node__create(void *data) {
-    list_node_t *new_node = (list_node_t *)malloc(
-        sizeof(list_node_t)
-    );
+    list_node_t *node;
 
-    new_node->data = data;
-    new_node->next = NULL;
+    node = malloc(sizeof(list_node_t));
 
-    return new_node;
+    *node = (list_node_t){
+        .data = data,
+        .next = NULL,
+        .prev = NULL
+    };
+
+    return node;
 }
 
-list_node_t *list_node__free(list_node_t *node) {
-    list_node_t *next;
-
-    if (node == NULL) {
-        return NULL;
-    }
-
-    next = node->next;
+void list_node__free(list_node_t *node) {
     free(node);
-
-    return next;
 }

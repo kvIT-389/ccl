@@ -1,66 +1,116 @@
 /**
  * \file list.c
- * \brief Contains linked list functions implementation.
+ * \brief Contains list functions implementation.
  */
+
+#include "list/list.h"
 
 #include <stdlib.h>
 
-#include "list/list.h"
 #include "list/listnode.h"
 
 
 list_t *list__create(void) {
-    list_t *new_list = (list_t *)malloc(sizeof(list_t));
+    list_t *list;
 
-    new_list->head = NULL;
-    new_list->size = 0;
+    list = malloc(sizeof(list_t));
 
-    return new_list;
+    *list = (list_t){
+        .size = 0,
+        .head = NULL,
+        .tail = NULL,
+    };
+
+    return list;
 }
 
-void list__add(list_t *list, void *data) {
-    list_node_t *new_node, *node;
-
-    if (list == NULL) {
-        return;
-    }
-
-    new_node = list_node__create(data);
-    node = list->head;
-
-    list->size++;
-
-    if (node == NULL) {
-        list->head = new_node;
-        return;
-    }
-
-    while (node->next != NULL) {
-        node = node->next;
-    }
-
-    node->next = new_node;
+void list__free(list_t *list) {
+    list__clear(list);
+    free(list);
 }
 
-void list__clear(list_t *list) {
+void list__push_back(list_t *list, void *data) {
     list_node_t *node;
 
     if (list == NULL) {
         return;
     }
 
-    node = list->head;
-    while (node != NULL) {
-        node = list_node__free(node);
+    node = list_node__create(data);
+
+    if (list__empty(list)) {
+        list->head = node;
+    } else {
+        node->prev = list->tail;
+        list->tail->next = node;
     }
 
-    list->head = NULL;
-    list->size = 0;
+    list->tail = node;
+    list->size++;
 }
 
-void list__free(list_t *list) {
-    list__clear(list);
-    free(list);
+void list__push_front(list_t *list, void *data) {
+    list_node_t *node;
+
+    if (list == NULL) {
+        return;
+    }
+
+    node = list_node__create(data);
+
+    if (list__empty(list)) {
+        list->tail = node;
+    } else {
+        node->next = list->head;
+        list->head->prev = node;
+    }
+
+    list->head = node;
+    list->size++;
+}
+
+void list__pop_back(list_t *list) {
+    if (list == NULL || list__empty(list)) {
+        return;
+    }
+
+    list->tail = list->tail->prev;
+    list->size--;
+
+    if (list__empty(list)) {
+        list_node__free(list->head);
+        list->head = NULL;
+    } else {
+        list_node__free(list->tail->next);
+        list->tail->next = NULL;
+    }
+}
+
+void list__pop_front(list_t *list) {
+    if (list == NULL || list__empty(list)) {
+        return;
+    }
+
+    list->head = list->head->next;
+    list->size--;
+
+    if (list__empty(list)) {
+        list_node__free(list->tail);
+        list->tail = NULL;
+    } else {
+        list_node__free(list->head->prev);
+        list->head->prev = NULL;
+    }
+}
+
+void list__clear(list_t *list) {
+    while (!list__empty(list)) {
+        list__pop_back(list);
+    }
+}
+
+uint8_t list__empty(list_t *list) {
+    return list == NULL || list->size == 0;
 }
 
 
