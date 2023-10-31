@@ -15,29 +15,7 @@ void f3() {
     printf("f3() call\n");
 }
 
-
-int main(int argc, char const *argv[]) {
-    list_t *list = list__create();
-
-    printf("Initial size: %d\n", list->size);
-
-    list__add(list, &f1);
-    list__add(list, &f2);
-
-    printf("Size after 2 add()'s: %d\n", list->size);
-
-    ((void (*)())list->head->data)();
-    ((void (*)())list->head->next->data)();
-
-    list__add(list, &f3);
-
-    printf("Size after 1 more add(): %d\n", list->size);
-
-    list__add(list, &f1);
-    list__add(list, &f1);
-
-    printf("Size after 2 extra add()'s: %d\n", list->size);
-
+void call_from_list(list_t *list) {
     list_iterator_t list_iter = list__get_iterator(list);
 
     printf("Start iterating through list...\n");
@@ -56,6 +34,32 @@ int main(int argc, char const *argv[]) {
     }
 
     printf("Iteration ended.\n");
+}
+
+
+int main(int argc, char const *argv[]) {
+    list_t *list = list__create();
+
+    printf("Initial size: %d\n", list->size);
+
+    list__push_back(list, &f1);
+    list__push_back(list, &f3);
+    list__push_front(list, &f2);
+
+    printf("Size after 3 pushes: %d\n", list->size);
+
+    call_from_list(list);
+
+    list__pop_back(list);
+    list__pop_front(list);
+
+    list__push_back(list, &f2);
+    list__push_front(list, &f3);
+    list__push_front(list, &f2);
+
+    printf("Size after 2 pops and 3 pushes: %d\n", list->size);
+
+    call_from_list(list);
 
     list__clear(list);
 
@@ -63,7 +67,7 @@ int main(int argc, char const *argv[]) {
 
     list__free(list);
 
-    printf("Size after free(): %d\n", list->size);
+    printf("Size after free(): %d\n (undefined)", list->size);
 
     return 0;
 }
