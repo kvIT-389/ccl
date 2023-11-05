@@ -1,6 +1,6 @@
 /**
  * \file listnode.h
- * \brief Contains declaration of linked list node structure.
+ * \brief Contains declaration of list node structure.
  */
 
 #ifndef LISTNODE_H_INCLUDED_
@@ -27,13 +27,11 @@ typedef struct list_node {
 
 
 /**
- * \brief Create new list node.
- * 
- * \param data: data of the created node.
+ * \brief Create new list node with data equals to `NULL`.
  * 
  * \returns Pointer to created node.
  */
-list_node_t *list_node__create(void *data);
+list_node_t *list_node__create(void);
 
 /**
  * \brief Frees list node.

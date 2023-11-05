@@ -20,7 +20,7 @@ extern "C" {
  * \brief Doubly-linked list data structure.
  */
 typedef struct list {
-  /* List size i.e elements count. */
+  /* Number of list elements. */
   size_t size;
 
   /* The first node of the list. */
@@ -35,8 +35,11 @@ typedef struct list {
  * \brief List iterator.
  */
 typedef struct list_iterator {
+  /* Iterator's list. */
+  list_t *list;
+
   /* List node with current iterator value. */
-  list_node_t *current_node;
+  list_node_t *node;
 } list_iterator_t;
 
 
@@ -48,11 +51,29 @@ typedef struct list_iterator {
 list_t *list__create(void);
 
 /**
- * \brief Clears list and frees its.
+ * \brief Clears list and frees it.
  * 
  * \param list: list to free.
  */
 void list__free(list_t *list);
+
+/**
+ * \brief Gets the number of list elements.
+ * 
+ * \param list: list to get size.
+ * 
+ * \returns Number of list elements.
+ */
+size_t list__size(const list_t *list);
+
+/**
+ * \brief Checks if list is empty or not.
+ * 
+ * \param iterator: list to check.
+ * 
+ * \returns `1` if list is empty, `0` otherwise.
+ */
+uint8_t list__empty(const list_t *list);
 
 /**
  * \brief Adds element to the end of the list.
@@ -92,50 +113,87 @@ void list__pop_front(list_t *list);
 void list__clear(list_t *list);
 
 /**
- * \brief Checks if list is empty or not.
- * 
- * \param iterator: list to check.
- * 
- * \returns `1` if list is empty, `0` otherwise.
- */
-uint8_t list__empty(list_t *list);
-
-/**
- * \brief Gets list iterator.
+ * \brief Gets iterator to the list's first element.
  * 
  * \param list: list to get iterator from.
  * 
- * \returns Iterator for the given list.
+ * \returns Iterator to the given list's first element.
  */
-list_iterator_t list__get_iterator(list_t *list);
+list_iterator_t list__begin(list_t *list);
+
+/**
+ * \brief Gets iterator to the list end (past-the-last element).
+ * 
+ * \param list: list to get iterator from.
+ * 
+ * \returns Iterator to the given list end.
+ */
+list_iterator_t list__end(list_t *list);
+
+/**
+ * \brief Gets iterator to the list's last element.
+ * 
+ * \param list: list to get iterator from.
+ * 
+ * \returns Iterator to the given list's last element.
+ */
+list_iterator_t list__rbegin(list_t *list);
+
+/**
+ * \brief Gets iterator to the list beginning (past-the-last
+ *        element in the reversed sequence).
+ * 
+ * \param list: list to get iterator from.
+ * 
+ * \returns Iterator to the given list beginning.
+ */
+list_iterator_t list__rend(list_t *list);
+
+/**
+ * \brief Checks if list forward iterator is ended or not.
+ * 
+ * \param it: list iterator to check.
+ * 
+ * \returns `1` if iterator is ended, `0` otherwise.
+ */
+uint8_t list_iterator__ended(const list_iterator_t *it);
+
+/**
+ * \brief Checks if list reverse iterator is ended or not.
+ * 
+ * \param it: list iterator to check.
+ * 
+ * \returns `1` if iterator is ended, `0` otherwise.
+ */
+uint8_t list_iterator__rended(const list_iterator_t *it);
 
 /**
  * \brief Gets current list iterator value as void pointer.
  * 
- * \param iterator: list iterator to get value from.
+ * \param it: list iterator to get value from.
  * 
  * \returns Current list iterator value if `iterator` is not ended,
  *          `NULL` otherwise.
  */
-void *list_iterator__current(list_iterator_t *iterator);
+void *list_iterator__current(const list_iterator_t *it);
 
 /**
  * \brief Changes list iterator value to the next.
  * 
- * \param iterator: list iterator to change.
+ * \param it: list iterator to change.
  * 
  * \returns Next list iterator value.
  */
-void *list_iterator__next(list_iterator_t *iterator);
+void *list_iterator__next(list_iterator_t *it);
 
 /**
- * \brief Checks if list iterator is ended or not.
+ * \brief Changes list iterator value to the previous.
  * 
- * \param iterator: list iterator to check.
+ * \param it: list iterator to change.
  * 
- * \returns `1` if iterator is ended, `0` otherwise.
+ * \returns Previous list iterator value.
  */
-uint8_t list_iterator__ended(list_iterator_t *iterator);
+void *list_iterator__prev(list_iterator_t *it);
 
 
 #ifdef __cplusplus

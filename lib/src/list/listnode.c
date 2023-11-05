@@ -8,13 +8,13 @@
 #include <stdlib.h>
 
 
-list_node_t *list_node__create(void *data) {
+list_node_t *list_node__create(void) {
     list_node_t *node;
 
     node = malloc(sizeof(list_node_t));
 
     *node = (list_node_t){
-        .data = data,
+        .data = NULL,
         .next = NULL,
         .prev = NULL
     };
