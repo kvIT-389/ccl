@@ -96,6 +96,21 @@ void *vector__at(const vector_t *vector, size_t n);
 void vector__set(vector_t *vector, size_t n, void *value);
 
 /**
+ * \brief Adds element to the end of the vector.
+ * 
+ * \param vector: vector where to add element.
+ * \param data: new element's data.
+ */
+void vector__push_back(vector_t *vector, void *data);
+
+/**
+ * \brief Removes the last element of the vector.
+ * 
+ * \param vector: vector where to remove element.
+ */
+void vector__pop_back(vector_t *vector);
+
+/**
  * \brief Changes size of the vector.
  * 
  * \attention If new size is less then old all data

@@ -56,6 +56,16 @@ void vector__set(vector_t *vector, size_t n, void *value) {
     vector->data[n] = value;
 }
 
+void vector__push_back(vector_t *vector, void *value) {
+    vector__set(vector, vector__size(vector), value);
+}
+
+void vector__pop_back(vector_t *vector) {
+    if (!vector__empty(vector)) {
+        vector__resize(vector, vector__size(vector) - 1);
+    }
+}
+
 void vector__resize(vector_t *vector, size_t size) {
     if (vector == NULL) {
         return;
