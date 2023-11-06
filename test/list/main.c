@@ -21,7 +21,7 @@ void iterate_forward(list_t *list) {
 
     printf("Start iterating forward through list...\n");
 
-    void (*fn)() = list_iterator__current(&it);
+    void (*fn)() = list_iterator__get(&it);
     while (!list_iterator__ended(&it)) {
         /* Using value */
         if (fn != NULL) {
@@ -42,7 +42,7 @@ void iterate_backward(list_t *list) {
 
     printf("Start iterating backward through list...\n");
 
-    void (*fn)() = list_iterator__current(&it);
+    void (*fn)() = list_iterator__get(&it);
     while (!list_iterator__rended(&it)) {
         /* Using value */
         if (fn != NULL) {

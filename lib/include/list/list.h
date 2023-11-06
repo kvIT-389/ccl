@@ -175,7 +175,7 @@ uint8_t list_iterator__rended(const list_iterator_t *it);
  * \returns Current list iterator value if `iterator` is not ended,
  *          `NULL` otherwise.
  */
-void *list_iterator__current(const list_iterator_t *it);
+void *list_iterator__get(const list_iterator_t *it);
 
 /**
  * \brief Changes list iterator value to the next.

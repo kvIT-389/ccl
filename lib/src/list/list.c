@@ -157,7 +157,7 @@ uint8_t list_iterator__rended(const list_iterator_t *it) {
 }
 
 
-void *list_iterator__current(const list_iterator_t *it) {
+void *list_iterator__get(const list_iterator_t *it) {
     return (it == NULL) || (it->list == NULL) ? NULL : it->node->data;
 }
 
@@ -166,7 +166,7 @@ void *list_iterator__next(list_iterator_t *it) {
         it->node = it->node->next;
     }
 
-    return list_iterator__current(it);
+    return list_iterator__get(it);
 }
 
 void *list_iterator__prev(list_iterator_t *it) {
@@ -174,5 +174,5 @@ void *list_iterator__prev(list_iterator_t *it) {
         it->node = it->node->prev;
     }
 
-    return list_iterator__current(it);
+    return list_iterator__get(it);
 }
