@@ -13,5 +13,5 @@ Create build directory and go to it
 Run CMake and after it make
 
 ```cmd
-# cmake ..  make
+# cmake .. && make
 ```
