@@ -29,7 +29,7 @@ void iterate_forward(vector_t *vector) {
         if (fn != NULL) {
             fn();
         } else {
-            printf("NULL.\n");
+            printf("NULL\n");
         }
 
         /* Updating value */
@@ -52,7 +52,7 @@ void iterate_backward(vector_t *vector) {
         if (fn != NULL) {
             fn();
         } else {
-            printf("NULL.\n");
+            printf("NULL\n");
         }
 
         /* Updating value */
@@ -76,7 +76,14 @@ int main(int argc, char const *argv[]) {
 
     printf("Size after 3 set()'s at maximum index 2: %d\n", vector__size(vector));
 
-    vector__set(vector, 4, &f3);
+    vector__pop_back(vector);
+
+    vector__push_back(vector, &f3);
+    vector__push_back(vector, &f2);
+
+    printf("Size after 1 pop_back() and 2 push_back()'s: %d\n", vector__size(vector));
+
+    vector__set(vector, 4, &f1);
 
     ((void (*)())vector__at(vector, 4))();
     ((void (*)())vector__at(vector, 2))();
