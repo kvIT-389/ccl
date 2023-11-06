@@ -18,11 +18,11 @@ extern "C" {
  * \brief Vector data structure.
  */
 typedef struct vector {
+  /* Number of vector elements. */
+  size_t size;
+
   /* Vector data (array of pointers to arbitrary type). */
   void **data;
-
-  /* Vector size i.e. elements count. */
-  size_t size;
 } vector_t;
 
 
@@ -30,11 +30,11 @@ typedef struct vector {
  * \brief Vector iterator.
  */
 typedef struct vector_iterator {
-  /* Pointer to current iterator value. */
-  void **current;
+  /* Iterator's vector. */
+  vector_t *vector;
 
-  /* Number of remaining iterator values including current. */
-  size_t i;
+  /* Index of current iterator value. */
+  size_t index;
 } vector_iterator_t;
 
 
@@ -48,18 +48,29 @@ typedef struct vector_iterator {
 vector_t *vector__create(size_t size);
 
 /**
- * \brief Changes size of the vector.
+ * \brief Frees vector.
  * 
- * \attention If new size is less then old all data
- *            at indexes started from `size` will be erased.
- * 
- * \param vector: vector to resize.
- * \param size: new vector size.
- * 
- * \returns New size of the vector if `vector` is not `NULL`,
- *          `0` otherwise.
+ * \param vector: vector to free.
  */
-size_t vector__resize(vector_t *vector, size_t size);
+void vector__free(vector_t *vector);
+
+/**
+ * \brief Gets the number of vector elements.
+ * 
+ * \param vector: vector to get size.
+ * 
+ * \returns Number of vector elements.
+ */
+size_t vector__size(const vector_t *vector);
+
+/**
+ * \brief Checks if vector is empty or not.
+ * 
+ * \param vector: vector to check.
+ * 
+ * \returns `1` if vector is empty, `0` otherwise.
+ */
+uint8_t vector__empty(const vector_t *vector);
 
 /**
  * \brief Gets vector element at certain index.
@@ -70,7 +81,7 @@ size_t vector__resize(vector_t *vector, size_t size);
  * \returns Vector element at index `n` if `vector` is not `NULL`
  *          and `n` is less than vector size, `NULL` otherwise.
  */
-void *vector__at(vector_t *vector, size_t n);
+void *vector__at(const vector_t *vector, size_t n);
 
 /**
  * \brief Sets vector value at certain index.
@@ -85,20 +96,73 @@ void *vector__at(vector_t *vector, size_t n);
 void vector__set(vector_t *vector, size_t n, void *value);
 
 /**
- * \brief Frees vector.
+ * \brief Changes size of the vector.
  * 
- * \param vector: vector to free.
+ * \attention If new size is less then old all data
+ *            at indexes started from `size` will be erased.
+ * 
+ * \param vector: vector to resize.
+ * \param size: new vector size.
  */
-void vector__free(vector_t *vector);
+void vector__resize(vector_t *vector, size_t size);
 
 /**
- * \brief Gets vector values iterator.
+ * \brief Gets iterator to the vector's first element.
  * 
  * \param vector: vector to get iterator from.
  * 
- * \returns Iterator of the given vector.
+ * \returns Iterator to the given vector's first element.
  */
-vector_iterator_t vector__get_iterator(vector_t *vector);
+vector_iterator_t vector__begin(vector_t *vector);
+
+/**
+ * \brief Gets iterator to the vector end (past-the-last
+ *        element).
+ * 
+ * \param vector: vector to get iterator from.
+ * 
+ * \returns Iterator to the given vector end.
+ */
+vector_iterator_t vector__end(vector_t *vector);
+
+/**
+ * \brief Gets iterator to the vector's last element.
+ * 
+ * \param vector: vector to get iterator from.
+ * 
+ * \returns Iterator to the given vector's last element.
+ */
+vector_iterator_t vector__rbegin(vector_t *vector);
+
+/**
+ * \brief Gets iterator to the vector beginning (past-the-last
+ *        element in the reversed sequence).
+ * 
+ * \param vector: vector to get iterator from.
+ * 
+ * \returns Iterator to the given vector beginning.
+ */
+vector_iterator_t vector__rend(vector_t *vector);
+
+/**
+ * \brief Checks if vector iterator is equal to its end
+ *        iterator (returned from `vector__end(...) call`).
+ * 
+ * \param iterator: vector iterator to check.
+ * 
+ * \returns `1` if iterator is ended, `0` otherwise.
+ */
+uint8_t vector_iterator__ended(const vector_iterator_t *it);
+
+/**
+ * \brief Checks if vector iterator is equal to its rend
+ *        iterator (returned from `vector__rend(...) call`).
+ * 
+ * \param iterator: vector iterator to check.
+ * 
+ * \returns `1` if iterator is ended, `0` otherwise.
+ */
+uint8_t vector_iterator__rended(const vector_iterator_t *it);
 
 /**
  * \brief Gets current vector iterator value as void pointer.
@@ -108,7 +172,7 @@ vector_iterator_t vector__get_iterator(vector_t *vector);
  * \returns Current vector iterator value if `iterator` is not ended,
  *          `NULL` otherwise.
  */
-void *vector_iterator__current(vector_iterator_t *iterator);
+void *vector_iterator__get(const vector_iterator_t *it);
 
 /**
  * \brief Changes vector iterator value to the next.
@@ -117,16 +181,16 @@ void *vector_iterator__current(vector_iterator_t *iterator);
  * 
  * \returns Next vector iterator value.
  */
-void *vector_iterator__next(vector_iterator_t *iterator);
+void *vector_iterator__next(vector_iterator_t *it);
 
 /**
- * \brief Checks if vector iterator is ended or not.
+ * \brief Changes vector iterator value to the next.
  * 
- * \param iterator: vector iterator to check.
+ * \param iterator: vector iterator to change.
  * 
- * \returns `1` if iterator is ended, `0` otherwise.
+ * \returns Next vector iterator value.
  */
-uint8_t vector_iterator__ended(vector_iterator_t *iterator);
+void *vector_iterator__prev(vector_iterator_t *it);
 
 
 #ifdef __cplusplus
