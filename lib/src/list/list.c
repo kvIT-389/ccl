@@ -158,7 +158,9 @@ uint8_t list_iterator__rended(const list_iterator_t *it) {
 
 
 void *list_iterator__get(const list_iterator_t *it) {
-    return (it == NULL) || (it->list == NULL) ? NULL : it->node->data;
+    return (it == NULL) || (it->list == NULL) ?
+                                       (NULL) :
+                                       (it->node->data);
 }
 
 void *list_iterator__next(list_iterator_t *it) {

@@ -69,7 +69,7 @@ size_t list__size(const list_t *list);
 /**
  * \brief Checks if list is empty or not.
  * 
- * \param iterator: list to check.
+ * \param list: list to check.
  * 
  * \returns `1` if list is empty, `0` otherwise.
  */
