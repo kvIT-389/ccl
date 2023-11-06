@@ -16,49 +16,78 @@ void f3() {
 }
 
 
-int main(int argc, char const *argv[]) {
-    vector_t *vector = vector__create(3);
+void iterate_forward(vector_t *vector) {
+    vector_iterator_t it = vector__begin(vector);
 
-    printf("Initial size: %d\n", vector->size);
+    printf("Start iterating forward through vector...\n");
 
-    vector__set(vector, 0, &f1);
-    vector__set(vector, 1, &f2);
-    vector__set(vector, 2, &f3);
+    void (*fn)() = vector_iterator__get(&it);
+    while (!vector_iterator__ended(&it)) {
+        printf("[%d] ", it.index);
 
-    ((void (*)())vector__at(vector, 2))();
-    ((void (*)())vector__at(vector, 0))();
-
-    printf("Size after 3 set()'s at maximum index 2: %d\n", vector->size);
-
-    vector__set(vector, 4, &f2);
-
-    ((void (*)())vector__at(vector, 4))();
-    ((void (*)())vector__at(vector, 2))();
-
-    printf("Size after extra set() at index 4, which was greater than vector's size: %d\n", vector->size);
-
-    vector_iterator_t vector_iter = vector__get_iterator(vector);
-
-    printf("Start iterating through vector...\n");
-
-    void (*fn)() = vector_iterator__current(&vector_iter);
-    while (!vector_iterator__ended(&vector_iter)) {
         /* Using value */
         if (fn != NULL) {
             fn();
         } else {
-            printf("Vector value is NULL.\n");
+            printf("NULL.\n");
         }
 
         /* Updating value */
-        fn = vector_iterator__next(&vector_iter);
+        fn = vector_iterator__next(&it);
     }
 
     printf("Iteration ended.\n");
+}
+
+void iterate_backward(vector_t *vector) {
+    vector_iterator_t it = vector__rbegin(vector);
+
+    printf("Start iterating backward through vector...\n");
+
+    void (*fn)() = vector_iterator__get(&it);
+    while (!vector_iterator__rended(&it)) {
+        printf("[%d] ", it.index);
+
+        /* Using value */
+        if (fn != NULL) {
+            fn();
+        } else {
+            printf("NULL.\n");
+        }
+
+        /* Updating value */
+        fn = vector_iterator__prev(&it);
+    }
+
+    printf("Iteration ended.\n");
+}
+
+
+int main(int argc, char const *argv[]) {
+    vector_t *vector = vector__create(3);
+
+    printf("Initial size: %d\n", vector__size(vector));
+
+    vector__set(vector, 0, &f3);
+    vector__set(vector, 1, &f1);
+    vector__set(vector, 2, &f2);
+
+    iterate_forward(vector);
+
+    printf("Size after 3 set()'s at maximum index 2: %d\n", vector__size(vector));
+
+    vector__set(vector, 4, &f3);
+
+    ((void (*)())vector__at(vector, 4))();
+    ((void (*)())vector__at(vector, 2))();
+
+    printf("Size after extra set() at index 4, which was greater than vector size: %d\n", vector__size(vector));
+
+    iterate_backward(vector);
 
     vector__free(vector);
 
-    printf("Size after free(): %d\n", vector->size);
+    printf("Size after free(): %d\n", vector__size(vector));
 
     return 0;
 }
