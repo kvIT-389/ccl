@@ -46,7 +46,7 @@ uint8_t list__empty(const list_t *list) {
 }
 
 
-void list__push_back(list_t *list, void *data) {
+void list__push_back(list_t *list, void *value) {
     list_node_t *node;
 
     if (list == NULL) {
@@ -57,13 +57,13 @@ void list__push_back(list_t *list, void *data) {
     node->prev = list->tail;
 
     list->tail->next = node;
-    list->tail->data = data;
+    list->tail->data = value;
 
     list->tail = node;
     list->size++;
 }
 
-void list__push_front(list_t *list, void *data) {
+void list__push_front(list_t *list, void *value) {
     list_node_t *node;
 
     if (list == NULL) {
@@ -74,7 +74,7 @@ void list__push_front(list_t *list, void *data) {
     node->next = list->head;
 
     list->head->prev = node;
-    list->head->data = data;
+    list->head->data = value;
 
     list->head = node;
     list->size++;
@@ -161,6 +161,14 @@ void *list_iterator__get(const list_iterator_t *it) {
     return (it == NULL) || (it->list == NULL) ?
                                        (NULL) :
                                        (it->node->data);
+}
+
+void list_iterator__set(list_iterator_t *it, void *value) {
+    if (list_iterator__ended(it) || list_iterator__rended(it)) {
+        return;
+    }
+
+    it->node = value;
 }
 
 void *list_iterator__next(list_iterator_t *it) {

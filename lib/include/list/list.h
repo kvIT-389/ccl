@@ -172,10 +172,18 @@ uint8_t list_iterator__rended(const list_iterator_t *it);
  * 
  * \param it: list iterator to get value from.
  * 
- * \returns Current list iterator value if `iterator` is not ended,
+ * \returns Current list iterator value if `it` is not ended,
  *          `NULL` otherwise.
  */
 void *list_iterator__get(const list_iterator_t *it);
+
+/**
+ * \brief Sets new list value at current iterator position.
+ * 
+ * \param it: list iterator where to set value.
+ * \param value: new value to set.
+ */
+void list_iterator__set(list_iterator_t *it, void *value);
 
 /**
  * \brief Changes list iterator value to the next.

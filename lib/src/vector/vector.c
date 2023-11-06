@@ -128,6 +128,14 @@ void *vector_iterator__get(const vector_iterator_t *it) {
                  (vector__at(it->vector, it->index));
 }
 
+void vector_iterator__set(vector_iterator_t *it, void *value) {
+    if (vector_iterator__ended(it) || vector_iterator__rended(it)) {
+        return;
+    }
+
+    vector__set(it->vector, it->index, value);
+}
+
 void *vector_iterator__next(vector_iterator_t *it) {
     if (!vector_iterator__ended(it)) {
         ++it->index;

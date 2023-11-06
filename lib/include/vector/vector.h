@@ -163,7 +163,7 @@ vector_iterator_t vector__rend(vector_t *vector);
  * \brief Checks if vector iterator is equal to its end
  *        iterator (returned from `vector__end(...) call`).
  * 
- * \param iterator: vector iterator to check.
+ * \param it: vector iterator to check.
  * 
  * \returns `1` if iterator is ended, `0` otherwise.
  */
@@ -173,7 +173,7 @@ uint8_t vector_iterator__ended(const vector_iterator_t *it);
  * \brief Checks if vector iterator is equal to its rend
  *        iterator (returned from `vector__rend(...) call`).
  * 
- * \param iterator: vector iterator to check.
+ * \param it: vector iterator to check.
  * 
  * \returns `1` if iterator is ended, `0` otherwise.
  */
@@ -182,17 +182,25 @@ uint8_t vector_iterator__rended(const vector_iterator_t *it);
 /**
  * \brief Gets current vector iterator value as void pointer.
  * 
- * \param iterator: vector iterator to get value from.
+ * \param it: vector iterator to get value from.
  * 
- * \returns Current vector iterator value if `iterator` is not ended,
+ * \returns Current vector iterator value if `it` is not ended,
  *          `NULL` otherwise.
  */
 void *vector_iterator__get(const vector_iterator_t *it);
 
 /**
+ * \brief Sets new vector value at current iterator position.
+ * 
+ * \param it: vector iterator where to set value.
+ * \param value: new value to set.
+ */
+void vector_iterator__set(vector_iterator_t *it, void *value);
+
+/**
  * \brief Changes vector iterator value to the next.
  * 
- * \param iterator: vector iterator to change.
+ * \param it: vector iterator to change.
  * 
  * \returns Next vector iterator value.
  */
@@ -201,7 +209,7 @@ void *vector_iterator__next(vector_iterator_t *it);
 /**
  * \brief Changes vector iterator value to the next.
  * 
- * \param iterator: vector iterator to change.
+ * \param it: vector iterator to change.
  * 
  * \returns Next vector iterator value.
  */
